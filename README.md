@@ -29,6 +29,14 @@ FxxkScroll does not block YouTube or Instagram. It blocks only the short-form pa
 - **Hard to turn off.** Turning blocking off takes a 30 second countdown. Switch to another window and it starts over.
 - **You see the count.** The menu shows how many times it blocked you today.
 
+## What it looks like
+
+Open a Short and the tab turns into this.
+
+<p align="center">
+  <img src="assets/blocking.gif" width="300" alt="Opening a YouTube Short shows the FxxkScroll block page">
+</p>
+
 ## What it blocks
 
 | Pattern | Blocks |

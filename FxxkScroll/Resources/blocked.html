@@ -3,13 +3,14 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="dark">
 <title>FxxkScroll</title>
 <style>
   :root {
-    --bg: #111110;
-    --fg: #f2f0eb;
-    --muted: #8a8780;
-    --line: #2a2926;
+    --bg: #000;
+    --fg: #f5f7eb;
+    --dim: #8b9a99;
+    --accent: #caff38;
   }
   * { box-sizing: border-box; margin: 0; }
   html, body { height: 100%; }
@@ -18,27 +19,43 @@
     color: var(--fg);
     font-family: -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", "Pretendard", sans-serif;
     display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 24px;
+    flex-direction: column;
+    height: 100vh;
+    overflow: hidden;
     -webkit-font-smoothing: antialiased;
   }
-  main { text-align: center; max-width: 560px; }
-  h1 {
-    font-size: clamp(56px, 11vw, 112px);
-    font-weight: 800;
-    letter-spacing: -0.045em;
-    line-height: 0.95;
+  .stage {
+    flex: 1 1 auto;
+    min-height: 0;
+    display: grid;
+    place-items: center;
+    padding: 16px 12px 0;
+  }
+  pre {
+    white-space: pre;
+    font-family: Menlo, Consolas, "Liberation Mono", monospace;
+    font-weight: 700;
+    font-variant-ligatures: none;
+    font-kerning: none;
+    line-height: 1.25;
+    color: var(--fg);
+    user-select: none;
+  }
+  .dim { color: var(--dim); }
+  .type { color: var(--accent); }
+  footer {
+    flex: none;
+    text-align: center;
+    padding: 12px 24px 40px;
   }
   p {
-    margin-top: 28px;
-    font-size: 19px;
-    color: var(--muted);
+    font-size: 18px;
+    color: var(--dim);
     line-height: 1.5;
   }
-  p strong { color: var(--fg); font-weight: 600; }
+  p strong { color: var(--accent); font-weight: 700; }
   button {
-    margin-top: 44px;
+    margin-top: 20px;
     font: inherit;
     font-size: 16px;
     font-weight: 600;
@@ -46,20 +63,24 @@
     background: var(--fg);
     border: 0;
     border-radius: 999px;
-    padding: 14px 28px;
+    padding: 13px 28px;
     cursor: pointer;
   }
   button:hover { opacity: 0.88; }
-  button:focus-visible { outline: 2px solid var(--fg); outline-offset: 4px; }
+  button:focus-visible { outline: 2px solid var(--accent); outline-offset: 4px; }
 </style>
 </head>
 <body>
-<main>
-  <h1>Fxxk scroll.</h1>
+<main class="stage" role="img" aria-label="FXXK SCROLL. STAY FOCUSED.">
+  <pre id="art" aria-hidden="true"></pre>
+</main>
+<footer>
   <p id="message"></p>
   <button id="back" type="button" autofocus></button>
-</main>
+</footer>
+<script src="ascii-frames.js"></script>
 <script>
+  // Message and back button.
   const params = new URLSearchParams(location.search);
   const service = params.get("s") || "web";
   const count = Math.max(1, parseInt(params.get("n") || "1", 10) || 1);
@@ -98,6 +119,90 @@
       window.close();
     }
   });
+</script>
+<script>
+  // ASCII animation. Frame text plus 2-bit tones (0, 2 plain, 1 dim, 3 accent).
+  (() => {
+    const data = window.FXXK_ASCII;
+    if (!data) return;
+    const art = document.getElementById("art");
+    const stage = document.querySelector(".stage");
+    const motion = matchMedia("(prefers-reduced-motion: reduce)");
+    const escape = s => s.replaceAll("&", "&amp;").replaceAll("<", "&lt;").replaceAll(">", "&gt;");
+    let total = 0;
+    const ends = data.durationsMs.map(ms => (total += ms));
+    const cache = new Map();
+    let current = -1, timer = 0;
+    const origin = performance.now();
+
+    function markup(index) {
+      if (cache.has(index)) return cache.get(index);
+      const colors = atob(data.tones[index]);
+      let output = "", run = "", last = -1, cell = 0;
+      const flush = () => {
+        if (!run) return;
+        const cls = last === 1 ? "dim" : last === 3 ? "type" : "";
+        output += cls ? `<span class="${cls}">${escape(run)}</span>` : escape(run);
+        run = "";
+      };
+      for (const ch of data.frames[index]) {
+        if (ch === "\n") { run += "\n"; continue; }
+        const tone = (colors.charCodeAt(cell >> 2) >> ((cell & 3) * 2)) & 3;
+        cell++;
+        if (tone !== last) { flush(); last = tone; }
+        run += ch;
+      }
+      flush();
+      cache.set(index, output);
+      if (cache.size > 32) cache.delete(cache.keys().next().value);
+      return output;
+    }
+
+    function show(index) {
+      if (index === current) return;
+      art.innerHTML = markup(index);
+      current = index;
+    }
+
+    function tick(now) {
+      if (motion.matches) { show(data.posterFrame); return; }
+      if (document.hidden) return;
+      const elapsed = (now - origin) % data.loopDurationMs;
+      let low = 0, high = ends.length - 1;
+      while (low < high) {
+        const mid = (low + high) >> 1;
+        if (elapsed < ends[mid]) high = mid; else low = mid + 1;
+      }
+      show(low);
+      timer = requestAnimationFrame(tick);
+    }
+
+    function sync() {
+      cancelAnimationFrame(timer);
+      if (motion.matches) { show(data.posterFrame); return; }
+      if (!document.hidden) timer = requestAnimationFrame(tick);
+    }
+
+    // Largest font size that fits the whole canvas in both directions.
+    function fit() {
+      const probe = document.createElement("span");
+      probe.style.cssText = 'position:absolute;visibility:hidden;font:700 100px Menlo,Consolas,"Liberation Mono",monospace';
+      probe.textContent = "M";
+      document.body.appendChild(probe);
+      const ratio = probe.getBoundingClientRect().width / 100;
+      probe.remove();
+      const byWidth = (stage.clientWidth - 24) / (data.columns * ratio + 0.2);
+      const byHeight = (stage.clientHeight - 16) / (data.rows * 1.25);
+      art.style.fontSize = Math.max(4, Math.min(16, byWidth, byHeight)) + "px";
+    }
+
+    new ResizeObserver(fit).observe(stage);
+    motion.addEventListener("change", sync);
+    document.addEventListener("visibilitychange", sync);
+    show(0);
+    fit();
+    sync();
+  })();
 </script>
 </body>
 </html>
