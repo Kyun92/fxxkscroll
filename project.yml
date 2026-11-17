@@ -24,6 +24,8 @@ targets:
       path: FxxkScroll/Info.plist
       properties:
         CFBundleDisplayName: FxxkScroll
+        CFBundleShortVersionString: $(MARKETING_VERSION)
+        CFBundleVersion: $(CURRENT_PROJECT_VERSION)
         LSUIElement: true
         LSApplicationCategoryType: public.app-category.productivity
         NSAppleEventsUsageDescription: FxxkScroll reads the address of your browser tabs to block short-form video pages. It never sends them anywhere.
