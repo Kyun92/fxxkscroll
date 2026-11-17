@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>FxxkScroll</title>
+<style>
+  :root {
+    --bg: #111110;
+    --fg: #f2f0eb;
+    --muted: #8a8780;
+    --line: #2a2926;
+  }
+  * { box-sizing: border-box; margin: 0; }
+  html, body { height: 100%; }
+  body {
+    background: var(--bg);
+    color: var(--fg);
+    font-family: -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", "Pretendard", sans-serif;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+    -webkit-font-smoothing: antialiased;
+  }
+  main { text-align: center; max-width: 560px; }
+  h1 {
+    font-size: clamp(56px, 11vw, 112px);
+    font-weight: 800;
+    letter-spacing: -0.045em;
+    line-height: 0.95;
+  }
+  p {
+    margin-top: 28px;
+    font-size: 19px;
+    color: var(--muted);
+    line-height: 1.5;
+  }
+  p strong { color: var(--fg); font-weight: 600; }
+  button {
+    margin-top: 44px;
+    font: inherit;
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--bg);
+    background: var(--fg);
+    border: 0;
+    border-radius: 999px;
+    padding: 14px 28px;
+    cursor: pointer;
+  }
+  button:hover { opacity: 0.88; }
+  button:focus-visible { outline: 2px solid var(--fg); outline-offset: 4px; }
+</style>
+</head>
+<body>
+<main>
+  <h1>Fxxk scroll.</h1>
+  <p id="message"></p>
+  <button id="back" type="button" autofocus></button>
+</main>
+<script>
+  const params = new URLSearchParams(location.search);
+  const service = params.get("s") || "web";
+  const count = Math.max(1, parseInt(params.get("n") || "1", 10) || 1);
+  const ko = (params.get("lang") || navigator.language || "").startsWith("ko");
+
+  const names = {
+    youtube: { ko: "쇼츠", en: "Shorts" },
+    instagram: { ko: "릴스", en: "Reels" },
+    tiktok: { ko: "틱톡", en: "TikTok" },
+  };
+  const homes = {
+    youtube: "https://www.youtube.com/",
+    instagram: "https://www.instagram.com/",
+  };
+  const name = names[service] ? names[service][ko ? "ko" : "en"] : (ko ? "페이지" : "page");
+
+  const message = document.getElementById("message");
+  const back = document.getElementById("back");
+  if (ko) {
+    document.documentElement.lang = "ko";
+    message.innerHTML = `오늘 <strong>${count}번째</strong>로 막은 ${name}입니다.`;
+    back.textContent = "하던 일로 돌아가기";
+  } else {
+    message.innerHTML = `${name} blocked. That makes <strong>${count}</strong> today.`;
+    back.textContent = "Back to what you were doing";
+  }
+  document.title = `FxxkScroll (${count})`;
+
+  back.addEventListener("click", () => {
+    // History is [page before, blocked page, this page]. Skip the blocked one.
+    if (history.length > 2) {
+      history.go(-2);
+    } else if (homes[service]) {
+      location.href = homes[service];
+    } else {
+      window.close();
+    }
+  });
+</script>
+</body>
+</html>

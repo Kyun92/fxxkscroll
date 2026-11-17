@@ -1,0 +1,246 @@
+{
+  "sourceLanguage": "en",
+  "strings": {
+    "Add": {
+      "localizations": {
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "추가"
+          }
+        }
+      }
+    },
+    "Add Current Tab": {
+      "localizations": {
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "현재 탭 추가"
+          }
+        }
+      }
+    },
+    "Add Manually…": {
+      "localizations": {
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "직접 추가…"
+          }
+        }
+      }
+    },
+    "Add to Block List": {
+      "localizations": {
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "차단 목록에 추가"
+          }
+        }
+      }
+    },
+    "Block List": {
+      "localizations": {
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "차단 목록"
+          }
+        }
+      }
+    },
+    "Blocked %lld today": {
+      "localizations": {
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "오늘 %lld번 막음"
+          }
+        }
+      }
+    },
+    "Blocking turns off at 0.": {
+      "localizations": {
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "0이 되면 차단이 꺼집니다."
+          }
+        }
+      }
+    },
+    "Cancel": {
+      "localizations": {
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "취소"
+          }
+        }
+      }
+    },
+    "Could not read the tab.": {
+      "localizations": {
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "탭 주소를 못 읽었습니다."
+          }
+        }
+      }
+    },
+    "Delete %@": {
+      "localizations": {
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "삭제: %@"
+          }
+        }
+      }
+    },
+    "FxxkScroll is off": {
+      "localizations": {
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "FxxkScroll 꺼짐"
+          }
+        }
+      }
+    },
+    "FxxkScroll is on": {
+      "localizations": {
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "FxxkScroll 켜짐"
+          }
+        }
+      }
+    },
+    "Hold ⌥ to delete": {
+      "localizations": {
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "⌥ 누르면 삭제"
+          }
+        }
+      }
+    },
+    "Leave this window and it starts over.": {
+      "localizations": {
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "창을 벗어나면 처음부터 다시 셉니다."
+          }
+        }
+      }
+    },
+    "Never mind": {
+      "localizations": {
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "그만두기"
+          }
+        }
+      }
+    },
+    "No permission: %@": {
+      "localizations": {
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "권한 필요: %@"
+          }
+        }
+      }
+    },
+    "Open a page in your browser first.": {
+      "localizations": {
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "브라우저에서 페이지를 먼저 열어 주세요."
+          }
+        }
+      }
+    },
+    "Quit": {
+      "localizations": {
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "종료"
+          }
+        }
+      }
+    },
+    "This pattern cannot be used.": {
+      "localizations": {
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "쓸 수 없는 패턴입니다."
+          }
+        }
+      }
+    },
+    "Turn Off…": {
+      "localizations": {
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "끄기…"
+          }
+        }
+      }
+    },
+    "Turn On": {
+      "localizations": {
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "켜기"
+          }
+        }
+      }
+    },
+    "View on GitHub": {
+      "localizations": {
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "GitHub"
+          }
+        }
+      }
+    },
+    "e.g. facebook.com/reel/*": {
+      "localizations": {
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "예: facebook.com/reel/*"
+          }
+        }
+      }
+    },
+    "e.g. tiktok.com": {
+      "localizations": {
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "예: tiktok.com"
+          }
+        }
+      }
+    }
+  },
+  "version": "1.0"
+}
